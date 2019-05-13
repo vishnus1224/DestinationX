@@ -111,6 +111,85 @@ class DeparturesFromStationViewModelTest {
     assertEquals(1, getDeparturesExecutionCount)
   }
 
+  @Test
+  fun `on retry click, get departures fails, should get error state`() {
+    // Given
+    val viewModel = createViewModel(createGetDeparturesFromStation(getDeparturesFailed()))
+
+    // When
+    val testObserver = viewModel.bindToUiState().test()
+
+    testScheduler.advanceTimeBy(20L, TimeUnit.MILLISECONDS)
+
+    viewModel.retryGettingDepartures()
+
+    // Then
+    testScheduler.advanceTimeBy(20L, TimeUnit.MILLISECONDS)
+
+    testObserver
+      .assertValueCount(4)
+      .assertNotComplete()
+      .assertNoErrors()
+      .assertValueAt(0, DeparturesUiState.Loading)
+      .assertValueAt(1, DeparturesUiState.Error)
+      .assertValueAt(2, DeparturesUiState.Loading)
+      .assertValueAt(3, DeparturesUiState.Error)
+      .assertNever(DeparturesUiState.Success(listOf(bondUiModel, superbUiModel, amazingUiModel, bestUiModel)))
+  }
+
+  @Test
+  fun `on retry click, get departures succeeds, should get list of departures`() {
+    // Given
+    var getDeparturesExecutionCount = 1
+    val response = Observable.defer {
+      if (getDeparturesExecutionCount % 2 == 0) getDeparturesSuccess()
+      else getDeparturesFailed()
+    }
+
+    val viewModel = createViewModel(createGetDeparturesFromStation(response))
+
+    // When
+    val testObserver = viewModel.bindToUiState().test()
+
+    testScheduler.advanceTimeBy(20L, TimeUnit.MILLISECONDS)
+
+    getDeparturesExecutionCount += 1
+
+    viewModel.retryGettingDepartures()
+
+    // Then
+    testScheduler.advanceTimeBy(20L, TimeUnit.MILLISECONDS)
+
+    testObserver
+      .assertValueCount(4)
+      .assertNotComplete()
+      .assertNoErrors()
+      .assertValueAt(0, DeparturesUiState.Loading)
+      .assertValueAt(1, DeparturesUiState.Error)
+      .assertValueAt(2, DeparturesUiState.Loading)
+      .assertValueAt(3, DeparturesUiState.Success(listOf(bondUiModel, superbUiModel, amazingUiModel, bestUiModel)))
+  }
+
+  @Test
+  fun `on init and retry click, should execute get departures`() {
+    // Given
+    var getDeparturesExecutionCount = 0
+    val response = Observable.just(allDepartures).doOnSubscribe { getDeparturesExecutionCount += 1 }
+
+    val viewModel = createViewModel(createGetDeparturesFromStation(response))
+
+    // When
+    viewModel.bindToUiState().test()
+
+    viewModel.retryGettingDepartures()
+    viewModel.retryGettingDepartures()
+    viewModel.retryGettingDepartures()
+    viewModel.retryGettingDepartures()
+
+    // Then
+    assertEquals(5, getDeparturesExecutionCount)
+  }
+
   private val may132019NineThirtyEightAmAtGmt = 1557740330000
   private val may132019NineFortyTwoAmAtGmt = 1557740530000
   private val may132019NineFortySevenAmAtGmt = 1557740830000

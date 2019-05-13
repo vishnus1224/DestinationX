@@ -63,6 +63,8 @@ class DeparturesFromStationViewModel(
     }
   }
 
+  fun retryGettingDepartures() = executeUseCase()
+
   private fun executeUseCase() {
     getDeparturesFromStation
       .execute(stationId)
