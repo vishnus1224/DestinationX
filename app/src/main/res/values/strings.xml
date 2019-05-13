@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DestinationX</string>
+  <string name="get_departures_error_message">Failed to load departures. Please try again.</string>
+  <string name="retry">Retry</string>
 </resources>

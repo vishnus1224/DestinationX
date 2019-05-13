@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/departures_error_view"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="@dimen/value_10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <TextView
+      android:id="@+id/departures_error_message"
+      android:text="@string/get_departures_error_message"
+      android:gravity="center"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+  <Button
+      android:id="@+id/error_retry_button"
+      android:layout_marginTop="@dimen/value_10dp"
+      android:text="@string/retry"
+      android:background="@color/colorPrimaryDark"
+      android:textColor="@android:color/white"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+</LinearLayout>

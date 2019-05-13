@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <dimen name="value_10dp">10dp</dimen>
+  <dimen name="value_5dp">5dp</dimen>
   <dimen name="value_8dp">8dp</dimen>
 </resources>
