@@ -1,6 +1,6 @@
-package com.vshirodkaer.destinationx.timetable
+package com.vshirodkaer.destinationx.timetable.webservice
 
-import com.vshirodkaer.destinationx.timetable.model.StationTimeTableResponse
+import com.vshirodkaer.destinationx.timetable.webservice.model.StationTimeTableResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path

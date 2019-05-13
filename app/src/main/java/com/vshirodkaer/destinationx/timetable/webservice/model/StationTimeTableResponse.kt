@@ -1,4 +1,4 @@
-package com.vshirodkaer.destinationx.timetable.model
+package com.vshirodkaer.destinationx.timetable.webservice.model
 
 data class StationTimeTableResponse(
   val timetable: StationTimeTableJson
