@@ -190,6 +190,38 @@ class DeparturesFromStationViewModelTest {
     assertEquals(5, getDeparturesExecutionCount)
   }
 
+  @Test
+  fun `when response returns invalid timezone, departure time should be shown at GMT`() {
+    // Given
+    val response = Observable.just(
+      listOf(
+        Departure("545L", "London", 1557740330000, "KIW"),
+        Departure("8BNA", "Zurich", 1557740530000, "QOP"),
+        Departure("PQIN", "New Orleans", 1557740960000, "NUR")
+      )
+    )
+
+    val viewModel = createViewModel(createGetDeparturesFromStation(response))
+
+    // When
+    val testObserver = viewModel.bindToUiState().test()
+
+    // Then
+    val departuresUiState= testObserver.values()[0]
+
+    val expectedDepartures = listOf(
+      DeparturesUiModel("London", "545L", "09:38"),
+      DeparturesUiModel("Zurich", "8BNA", "09:42"),
+      DeparturesUiModel("New Orleans", "PQIN", "09:49")
+    )
+
+    assertTrue(departuresUiState is DeparturesUiState.Success)
+
+    val actualDepartures = (departuresUiState as DeparturesUiState.Success).departures
+
+    assertEquals(expectedDepartures, actualDepartures)
+  }
+
   private val may132019NineThirtyEightAmAtGmt = 1557740330000
   private val may132019NineFortyTwoAmAtGmt = 1557740530000
   private val may132019NineFortySevenAmAtGmt = 1557740830000
