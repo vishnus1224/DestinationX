@@ -8,8 +8,7 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 
 /**
- * When executed, fetches the time table for a station.
- * Gets the departures from the time table and sorts them by the time of departure.
+ * When executed, fetches the time table for a station and returns the departures.
  */
 class GetDeparturesFromStationImpl(
   private val stationTimeTableService: StationTimeTableWebService
@@ -27,7 +26,6 @@ private fun responseToListOfDepartures(timeTableResponse: StationTimeTableRespon
     .timetable
     .departures
     .map(::jsonToEntity)
-    .sortedBy(::departureTime)
 
 private fun jsonToEntity(departureJson: DepartureJson) = Departure(
   lineNumber = departureJson.line_code,
@@ -35,5 +33,3 @@ private fun jsonToEntity(departureJson: DepartureJson) = Departure(
   departureTime = departureJson.datetime.timestamp,
   stationTimeZone = departureJson.datetime.tz
 )
-
-private fun departureTime(departure: Departure): Long = departure.departureTime
