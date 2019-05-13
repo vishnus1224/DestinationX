@@ -1,5 +1,5 @@
 package com.vshirodkaer.destinationx.application
 
-class DestinationXApplication : ModuleBasedApplication() {
+class DestinationXAndroidApplication : ModuleBasedApplication() {
   override val modules: Modules = ModulesForRealApp
 }
