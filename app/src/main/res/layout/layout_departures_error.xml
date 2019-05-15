@@ -16,7 +16,7 @@
       android:layout_height="wrap_content"/>
 
   <Button
-      android:id="@+id/error_retry_button"
+      android:id="@+id/departures_error_retry_button"
       android:layout_marginTop="@dimen/value_10dp"
       android:text="@string/retry"
       android:background="@color/colorPrimaryDark"

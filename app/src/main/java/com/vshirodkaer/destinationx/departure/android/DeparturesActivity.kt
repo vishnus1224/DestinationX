@@ -36,7 +36,7 @@ class DeparturesActivity : AppCompatActivity() {
       this, DeparturesViewModelFactory(10, departureModule.getDeparturesFromStation)
     ).get(DeparturesFromStationViewModel::class.java)
 
-    error_retry_button.setOnClickListener { viewModel.retryGettingDepartures() }
+    departures_error_retry_button.setOnClickListener { viewModel.retryGettingDepartures() }
 
     viewModel.
       bindToUiState()
