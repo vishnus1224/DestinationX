@@ -2,6 +2,7 @@ package com.vshirodkaer.destinationx.departure.android
 
 import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -47,7 +48,11 @@ class DeparturesActivity : AppCompatActivity() {
 
   private fun initRecycler() {
     departures_from_station_recycler.adapter = departuresAdapter
-    departures_from_station_recycler.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+    departures_from_station_recycler.addItemDecoration(
+      DividerItemDecoration(this, DividerItemDecoration.VERTICAL).apply {
+        setDrawable(ContextCompat.getDrawable(this@DeparturesActivity, R.drawable.departures_recycler_divider)!!)
+      }
+    )
     departures_from_station_recycler.layoutManager = LinearLayoutManager(this)
   }
 
